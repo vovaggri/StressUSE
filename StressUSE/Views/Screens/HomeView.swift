@@ -13,7 +13,7 @@ struct HomeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     VStack(alignment: .leading, spacing: 14) {
-                        Text("StressUSE")
+                        Text("Стресс ЕГЭ")
                             .font(.system(size: 42, weight: .black, design: .rounded))
                             .foregroundStyle(.white)
 
