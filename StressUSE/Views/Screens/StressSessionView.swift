@@ -10,76 +10,36 @@ struct StressSessionView: View {
             stressBackground
 
             VStack(alignment: .leading, spacing: 20) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(viewModel.deck.title)
-                            .font(.title2.weight(.black))
-                            .foregroundStyle(.white)
-                        Text(viewModel.progressText)
-                            .font(.headline.weight(.medium))
-                            .foregroundStyle(.white.opacity(0.78))
-                    }
+                header
+                metrics
 
-                    Spacer()
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 18) {
+                        questionCard
 
-                    Button(action: onExit) {
-                        Image(systemName: "xmark")
-                            .font(.headline.weight(.bold))
-                            .foregroundStyle(.white)
-                            .padding(14)
-                            .background(.white.opacity(0.12), in: Circle())
-                    }
-                    .buttonStyle(.plain)
-                }
-
-                HStack(spacing: 12) {
-                    MetricCapsule(title: "Осталось", value: viewModel.formattedTimeRemaining)
-                    MetricCapsule(title: "Прошло", value: viewModel.formattedElapsedTime)
-                }
-
-                VStack(alignment: .leading, spacing: 16) {
-                    Text(viewModel.currentCard.topic.uppercased())
-                        .font(.caption.weight(.heavy))
-                        .foregroundStyle(.orange)
-
-                    Text(viewModel.currentCard.prompt)
-                        .font(.system(size: 30, weight: .black, design: .rounded))
-                        .foregroundStyle(.white)
-
-                    if showHints {
-                        Text(viewModel.currentCard.hint)
-                            .font(.body)
-                            .foregroundStyle(.white.opacity(0.72))
-                    }
-                }
-                .padding(22)
-                .background(.white.opacity(0.09), in: RoundedRectangle(cornerRadius: 28, style: .continuous))
-
-                ScrollView {
-                    VStack(spacing: 12) {
-                        ForEach(viewModel.currentCard.options) { option in
-                            OptionTileView(
-                                option: option,
-                                isSelected: viewModel.selectedOptionIDs.contains(option.id),
-                                action: { viewModel.toggleSelection(for: option.id) }
-                            )
+                        VStack(spacing: 12) {
+                            ForEach(viewModel.currentCard.options) { option in
+                                OptionTileView(
+                                    option: option,
+                                    isSelected: viewModel.selectedOptionIDs.contains(option.id),
+                                    action: { viewModel.toggleSelection(for: option.id) }
+                                )
+                            }
                         }
                     }
+                    .padding(.bottom, 8)
                 }
-
-                Button(action: viewModel.submitAnswer) {
-                    Text("Ответить и дальше")
-                        .font(.headline.weight(.bold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(viewModel.canSubmit ? Color.white : Color.white.opacity(0.35))
-                        .foregroundStyle(.black.opacity(viewModel.canSubmit ? 1 : 0.55))
-                        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
-                }
-                .buttonStyle(.plain)
-                .disabled(!viewModel.canSubmit)
+                .frame(maxHeight: .infinity, alignment: .top)
             }
-            .padding(20)
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .safeAreaInset(edge: .bottom) {
+                submitButton
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
+                    .padding(.bottom, 12)
+                    .background(.ultraThinMaterial.opacity(0.35))
+            }
         }
         .interactiveDismissDisabled()
         .alert("Выйти из Stress Mode?", isPresented: $viewModel.showExitConfirmation) {
@@ -92,6 +52,73 @@ struct StressSessionView: View {
         } message: {
             Text("Все неотвеченные вопросы будут засчитаны как ошибки.")
         }
+    }
+
+    private var header: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(viewModel.deck.title)
+                    .font(.title2.weight(.black))
+                    .foregroundStyle(.white)
+                Text(viewModel.progressText)
+                    .font(.headline.weight(.medium))
+                    .foregroundStyle(.white.opacity(0.78))
+            }
+
+            Spacer()
+
+            Button(action: onExit) {
+                Image(systemName: "xmark")
+                    .font(.headline.weight(.bold))
+                    .foregroundStyle(.white)
+                    .padding(14)
+                    .background(.white.opacity(0.12), in: Circle())
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    private var metrics: some View {
+        HStack(spacing: 12) {
+            MetricCapsule(title: "Осталось", value: viewModel.formattedTimeRemaining)
+            MetricCapsule(title: "Прошло", value: viewModel.formattedElapsedTime)
+        }
+    }
+
+    private var questionCard: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text(viewModel.currentCard.topic.uppercased())
+                .font(.caption.weight(.heavy))
+                .foregroundStyle(.orange)
+
+            Text(viewModel.currentCard.prompt)
+                .font(.system(size: 26, weight: .black, design: .rounded))
+                .foregroundStyle(.white)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if showHints {
+                Text(viewModel.currentCard.hint)
+                    .font(.body)
+                    .foregroundStyle(.white.opacity(0.72))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(22)
+        .background(.white.opacity(0.09), in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+    }
+
+    private var submitButton: some View {
+        Button(action: viewModel.submitAnswer) {
+            Text("Ответить и дальше")
+                .font(.headline.weight(.bold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(viewModel.canSubmit ? Color.white : Color.white.opacity(0.35))
+                .foregroundStyle(.black.opacity(viewModel.canSubmit ? 1 : 0.55))
+                .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .disabled(!viewModel.canSubmit)
     }
 
     private var stressBackground: some View {
@@ -113,4 +140,36 @@ struct StressSessionView: View {
         }
         .ignoresSafeArea()
     }
+}
+
+#Preview {
+    let mockCard = QuestionCard(
+        id: "preview-1",
+        subject: "Превью",
+        topic: "Тема",
+        prompt: "Какой правильный ответ?",
+        hint: "Подумайте о базовых принципах",
+        options: [
+            AnswerOption(id: "1", text: "Вариант 1"),
+            AnswerOption(id: "2", text: "Вариант 2"),
+            AnswerOption(id: "3", text: "Вариант 3")
+        ],
+        correctOptionIDs: ["2"]
+    )
+
+    let mockDeck = QuestionDeck(
+        id: "deck-preview",
+        title: "Стресс-тест",
+        subtitle: "Мини-набор для превью",
+        subjectLabel: "ЕГЭ",
+        gradientColors: ["#7C3AED", "#F97316"],
+        cards: [mockCard]
+    )
+
+    let viewModel = StressSessionViewModel(
+        deck: mockDeck,
+        stressSoundEnabled: false
+    ) { _ in }
+
+    return StressSessionView(viewModel: viewModel, onExit: {})
 }
