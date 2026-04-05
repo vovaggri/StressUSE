@@ -29,7 +29,8 @@ struct ContentView: View {
                             decks: appViewModel.decks,
                             history: appViewModel.history,
                             weakTopicStats: appViewModel.weakTopicStats,
-                            onSelectDeck: appViewModel.selectDeck
+                            onSelectDeck: appViewModel.selectDeck,
+                            onCreateDeck: appViewModel.presentDeckComposer
                         )
                     }
                 }
@@ -100,6 +101,23 @@ struct ContentView: View {
             }
         }
         .animation(.spring(response: 0.45, dampingFraction: 0.92), value: appViewModel.navigationState)
+        .sheet(
+            isPresented: Binding(
+                get: { appViewModel.isPresentingDeckComposer },
+                set: { isPresented in
+                    appViewModel.isPresentingDeckComposer = isPresented
+                }
+            )
+        ) {
+            NavigationStack {
+                CreateDeckView(
+                    viewModel: appViewModel.deckComposerViewModel,
+                    onClose: appViewModel.dismissDeckComposer,
+                    onSave: appViewModel.saveCustomDeck
+                )
+            }
+            .presentationDetents([.large])
+        }
     }
 }
 

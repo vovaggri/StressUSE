@@ -5,6 +5,7 @@ struct HomeView: View {
     let history: [SessionRecord]
     let weakTopicStats: [String: Int]
     let onSelectDeck: (QuestionDeck) -> Void
+    let onCreateDeck: () -> Void
 
     var body: some View {
         ZStack {
@@ -27,6 +28,32 @@ struct HomeView: View {
                         MetricCapsule(title: "Всего наборов", value: "\(decks.count)")
                         MetricCapsule(title: "Темы с ошибками", value: "\(weakTopicStats.filter { $0.value > 0 }.count)")
                     }
+
+                    Button(action: onCreateDeck) {
+                        HStack(spacing: 14) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title2.weight(.bold))
+                                .foregroundStyle(Color(hex: "#2563EB"))
+
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Создать свой набор")
+                                    .font(.headline.weight(.bold))
+                                    .foregroundStyle(Color.black.opacity(0.86))
+                                Text("Выбери предмет, добавь свои вопросы и тренируйся по ним как по обычному stress-сету.")
+                                    .font(.subheadline)
+                                    .foregroundStyle(Color.black.opacity(0.62))
+                            }
+
+                            Spacer()
+
+                            Image(systemName: "chevron.right")
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(Color.black.opacity(0.35))
+                        }
+                        .padding(18)
+                        .background(.white.opacity(0.94), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
 
                     VStack(alignment: .leading, spacing: 14) {
                         Text("Наборы")
@@ -97,6 +124,7 @@ struct HomeView: View {
         decks: DeckRepository().loadDecks(),
         history: [],
         weakTopicStats: [:],
-        onSelectDeck: { _ in }
+        onSelectDeck: { _ in },
+        onCreateDeck: {}
     )
 }

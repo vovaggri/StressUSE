@@ -5,12 +5,15 @@ protocol PersistenceServicing {
     func saveHistory(_ history: [SessionRecord])
     func loadWeakTopicStats() -> [String: Int]
     func saveWeakTopicStats(_ stats: [String: Int])
+    func loadCustomDecks() -> [QuestionDeck]
+    func saveCustomDecks(_ decks: [QuestionDeck])
 }
 
 struct PersistenceService: PersistenceServicing {
     private let defaults = UserDefaults.standard
     private let historyKey = "stressuse.history"
     private let weakTopicsKey = "stressuse.weaktopics"
+    private let customDecksKey = "stressuse.customdecks"
 
     func loadHistory() -> [SessionRecord] {
         decode([SessionRecord].self, forKey: historyKey) ?? []
@@ -26,6 +29,14 @@ struct PersistenceService: PersistenceServicing {
 
     func saveWeakTopicStats(_ stats: [String: Int]) {
         encode(stats, forKey: weakTopicsKey)
+    }
+
+    func loadCustomDecks() -> [QuestionDeck] {
+        decode([QuestionDeck].self, forKey: customDecksKey) ?? []
+    }
+
+    func saveCustomDecks(_ decks: [QuestionDeck]) {
+        encode(decks, forKey: customDecksKey)
     }
 
     private func encode<T: Encodable>(_ value: T, forKey key: String) {

@@ -14,6 +14,7 @@ final class AppViewModel {
     private let deckRepository: DeckProviding
     private let persistenceService: PersistenceServicing
     private var cardsByID: [String: QuestionCard] = [:]
+    private var customDecks: [QuestionDeck] = []
 
     var decks: [QuestionDeck] = []
     var history: [SessionRecord] = []
@@ -24,6 +25,8 @@ final class AppViewModel {
     var resultDeck: QuestionDeck?
     var latestMistakesDeck: QuestionDeck?
     var selectedTab: AppTab = .decks
+    var isPresentingDeckComposer = false
+    var deckComposerViewModel = CreateDeckViewModel()
 
     init(
         deckRepository: DeckProviding = DeckRepository(),
@@ -42,12 +45,8 @@ final class AppViewModel {
     }
 
     func load() {
-        decks = deckRepository.loadDecks()
-        cardsByID = Dictionary(
-            uniqueKeysWithValues: decks
-                .flatMap(\.cards)
-                .map { ($0.id, $0) }
-        )
+        customDecks = persistenceService.loadCustomDecks()
+        refreshDeckLibrary()
         history = persistenceService.loadHistory().sorted(by: { $0.completedAt > $1.completedAt })
         weakTopicStats = persistenceService.loadWeakTopicStats()
         latestMistakesDeck = buildMistakesDeck(from: history.first)
@@ -108,6 +107,27 @@ final class AppViewModel {
 
     func closeDeckDetail() {
         selectedDeck = nil
+    }
+
+    func presentDeckComposer() {
+        deckComposerViewModel = CreateDeckViewModel()
+        isPresentingDeckComposer = true
+    }
+
+    func dismissDeckComposer() {
+        isPresentingDeckComposer = false
+    }
+
+    func saveCustomDeck(_ deck: QuestionDeck) {
+        customDecks.insert(deck, at: 0)
+        persistenceService.saveCustomDecks(customDecks)
+        refreshDeckLibrary()
+
+        latestResult = nil
+        resultDeck = nil
+        selectedDeck = deck
+        selectedTab = .decks
+        isPresentingDeckComposer = false
     }
 
     private func completeSession(with summary: SessionSummary) {
@@ -215,6 +235,15 @@ final class AppViewModel {
             subjectLabel: deck.subjectLabel,
             gradientColors: deck.gradientColors,
             cards: deck.cards.shuffled()
+        )
+    }
+
+    private func refreshDeckLibrary() {
+        decks = customDecks + deckRepository.loadDecks()
+        cardsByID = Dictionary(
+            uniqueKeysWithValues: decks
+                .flatMap(\.cards)
+                .map { ($0.id, $0) }
         )
     }
 }
