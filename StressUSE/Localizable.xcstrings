@@ -303,6 +303,16 @@
         }
       }
     },
+    "Договор Публичной Оферты" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public Offer Agreement"
+          }
+        }
+      }
+    },
     "Доступ открыт" : {
       "localizations" : {
         "en" : {
@@ -699,6 +709,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Try again"
+          }
+        }
+      }
+    },
+    "Публичная оферта" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public agreement"
           }
         }
       }

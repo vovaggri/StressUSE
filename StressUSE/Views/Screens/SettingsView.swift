@@ -49,6 +49,31 @@ struct SettingsView: View {
                     }
                     .padding(22)
                     .background(.white.opacity(0.92), in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+
+                    NavigationLink {
+                        PublicOfferView()
+                    } label: {
+                        HStack(spacing: 14) {
+                            Image(systemName: "doc.text.fill")
+                                .font(.headline.weight(.bold))
+                                .foregroundStyle(Color(hex: "#2563EB"))
+                                .frame(width: 38, height: 38)
+                                .background(Color.black.opacity(0.06), in: Circle())
+
+                            Text("Договор Публичной Оферты")
+                                .font(.headline.weight(.bold))
+                                .foregroundStyle(Color.black.opacity(0.86))
+
+                            Spacer()
+
+                            Image(systemName: "chevron.right")
+                                .font(.subheadline.weight(.bold))
+                                .foregroundStyle(Color.black.opacity(0.42))
+                        }
+                        .padding(18)
+                        .background(.white.opacity(0.92), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
                 }
                 .padding(20)
             }
