@@ -1,0 +1,868 @@
+{
+  "sourceLanguage" : "ru",
+  "strings" : {
+    "" : {
+
+    },
+    "«%@» исчезнет из твоих наборов." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" will disappear from your sets."
+          }
+        }
+      }
+    },
+    "%@, без звука" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, no sound"
+          }
+        }
+      }
+    },
+    "%@, со звуком" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, with sound"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
+    "%lld вопросов" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld questions"
+          }
+        }
+      }
+    },
+    "%lld вопросов в повторении" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld questions to repeat"
+          }
+        }
+      }
+    },
+    "%lld ошибок" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld mistakes"
+          }
+        }
+      }
+    },
+    "%lld раз(а)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld times"
+          }
+        }
+      }
+    },
+    "%lld слабых тем" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld weak topics"
+          }
+        }
+      }
+    },
+    "%lld/%lld" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
+    "3 ч 55 мин" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 hours 55 minutes"
+          }
+        }
+      }
+    },
+    "10 мин" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10 min"
+          }
+        }
+      }
+    },
+    "Premium" : {
+
+    },
+    "Premium-доступ" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium-access"
+          }
+        }
+      }
+    },
+    "Stress Mode и персональная аналитика уже доступны. Оплата проходит через App Store. Отменить премиум версию можно в настройках аккаунта." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stress Mode and personalized analytics are now available. Payment is processed through the App Store. You can cancel the premium version in your account settings."
+          }
+        }
+      }
+    },
+    "StressCards" : {
+
+    },
+    "Без ошибок. Отличный контроль в стресс-режиме." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No mistakes. Excellent control under stress."
+          }
+        }
+      }
+    },
+    "в месяц" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "per month"
+          }
+        }
+      }
+    },
+    "Варианты ответа" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer options"
+          }
+        }
+      }
+    },
+    "Вопрос %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question %lld"
+          }
+        }
+      }
+    },
+    "Вопросы" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions"
+          }
+        }
+      }
+    },
+    "Восстановить покупки" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore purchases"
+          }
+        }
+      }
+    },
+    "Все неотвеченные вопросы будут засчитаны как ошибки." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All unanswered questions will be counted as errors."
+          }
+        }
+      }
+    },
+    "Выбери предмет, добавь свои вопросы и тренируйся по ним как по обычному stress-сету." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a subject, add your questions and practice them like a regular stress set."
+          }
+        }
+      }
+    },
+    "Выбери предмет, заполни карточки и сохрани набор. После этого он появится рядом со встроенными вариантами и будет работать в обычном режиме тренировки." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select an item, complete the cards, and save the set. It will then appear next to the built-in options and work as usual in the training mode."
+          }
+        }
+      }
+    },
+    "Выбрать другой набор" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose another set"
+          }
+        }
+      }
+    },
+    "Выбрать звук" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select sound"
+          }
+        }
+      }
+    },
+    "Выйти" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit"
+          }
+        }
+      }
+    },
+    "Выйти из Stress Mode?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit Stress Mode?"
+          }
+        }
+      }
+    },
+    "Готово" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Длительность сессии" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session duration"
+          }
+        }
+      }
+    },
+    "Добавить" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "Доступ открыт" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access is open"
+          }
+        }
+      }
+    },
+    "Доступно в Premium." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available in Premium."
+          }
+        }
+      }
+    },
+    "Ещё вариант" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Another option"
+          }
+        }
+      }
+    },
+    "Закрыть" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "Заменить" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace"
+          }
+        }
+      }
+    },
+    "Запустить Stress Mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch Stress Mode"
+          }
+        }
+      }
+    },
+    "Запустить тест" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run test"
+          }
+        }
+      }
+    },
+    "Здесь собираются вопросы, на которых уже были ошибки или пропуски. Можно быстро вернуться именно к слабым местам." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions where mistakes or omissions were previously made are collected here. You can quickly return to your weak points."
+          }
+        }
+      }
+    },
+    "История пока пустая" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The history is still empty"
+          }
+        }
+      }
+    },
+    "К наборам" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To sets"
+          }
+        }
+      }
+    },
+    "Как работает Stress Mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How Stress Mode works"
+          }
+        }
+      }
+    },
+    "Как работает тест" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How the test works"
+          }
+        }
+      }
+    },
+    "Набор пуст. Добавь карточки, чтобы активировать стресс-сессию." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The set is empty. Add cards to activate the stress session."
+          }
+        }
+      }
+    },
+    "Наборы" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sets"
+          }
+        }
+      }
+    },
+    "Наборы собраны как экзаменационные варианты: в одном сете несколько тем, чтобы тренировать переключение и темп." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sets are compiled as exam options: one set contains several topics to practice switching and tempo."
+          }
+        }
+      }
+    },
+    "Настройки" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Начать повтор" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start repeat"
+          }
+        }
+      }
+    },
+    "Не хватает данных" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing data"
+          }
+        }
+      }
+    },
+    "Необязательно. Можно добавить изображение с условием, схемой или фрагментом задания." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional. You can add an image with the condition, diagram, or fragment of the task."
+          }
+        }
+      }
+    },
+    "Новый набор" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New set"
+          }
+        }
+      }
+    },
+    "Ок" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ok"
+          }
+        }
+      }
+    },
+    "Оплата проходит через App Store. Отменить премиум версию можно в настройках аккаунта." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment is processed through the App Store. You can cancel the premium version in your account settings."
+          }
+        }
+      }
+    },
+    "От 10 минут до 3 часов 55 минут" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From 10 minutes to 3 hours 55 minutes"
+          }
+        }
+      }
+    },
+    "Ответить и дальше" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reply and further"
+          }
+        }
+      }
+    },
+    "Открыть работу над ошибками" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open work on test mistakes"
+          }
+        }
+      }
+    },
+    "Отмена" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Отметь правильные варианты переключателем справа." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select the correct options using the switch on the right."
+          }
+        }
+      }
+    },
+    "Ошибки" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mistakes"
+          }
+        }
+      }
+    },
+    "Ошибки по темам пока не накопились." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no mistakes on the topics yet."
+          }
+        }
+      }
+    },
+    "Ошибок пока нет" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No mistakes yet"
+          }
+        }
+      }
+    },
+    "Первые 7 дней бесплатно, затем подписка продлевается автоматически." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The first 7 days are free, then the subscription is renewed automatically."
+          }
+        }
+      }
+    },
+    "Пока нет накопленной статистики по ошибкам." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no accumulated statistics on mistakes yet."
+          }
+        }
+      }
+    },
+    "После первой сессии здесь автоматически появится подборка для повторения." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After the first session, a selection for repetition will automatically appear here."
+          }
+        }
+      }
+    },
+    "После первой сессии здесь появятся результаты и слабые темы." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After the first session, results and weak topics will appear here."
+          }
+        }
+      }
+    },
+    "После первых ошибок здесь появятся темы для повторения." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After the first mistakes, topics for repetition will appear here."
+          }
+        }
+      }
+    },
+    "Последние попытки" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last attempts"
+          }
+        }
+      }
+    },
+    "Последние результаты" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest results"
+          }
+        }
+      }
+    },
+    "Предмет" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subject"
+          }
+        }
+      }
+    },
+    "Продолжить" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
+    "Пройти заново" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        }
+      }
+    },
+    "Работа над ошибками" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work on mistakes"
+          }
+        }
+      }
+    },
+    "Свой звук для Stress Mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom sound for Stress Mode"
+          }
+        }
+      }
+    },
+    "Сессия завершена" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The session has ended."
+          }
+        }
+      }
+    },
+    "Собери свой набор" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build your set"
+          }
+        }
+      }
+    },
+    "Создать свой набор" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your own set"
+          }
+        }
+      }
+    },
+    "Сохранить" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Статистика" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistics"
+          }
+        }
+      }
+    },
+    "Статистика появится после первых прохождений." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistics will appear after the first playthroughs."
+          }
+        }
+      }
+    },
+    "Текст варианта" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Option text"
+          }
+        }
+      }
+    },
+    "Топ слабых тем" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top weak topics"
+          }
+        }
+      }
+    },
+    "Удалить" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Удалить набор?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete a set?"
+          }
+        }
+      }
+    },
+    "Фокус слабых тем" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focus on weak topics"
+          }
+        }
+      }
+    },
+    "Фото к вопросу" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo for the question"
+          }
+        }
+      }
+    },
+    "Частые слабые темы" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Common weak topics"
+          }
+        }
+      }
+    },
+    "Что пошло неидеально" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What went less than perfect"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct StressSessionView: View {
     @AppStorage("stressuse.showHints") private var showHints = true
@@ -95,6 +96,20 @@ struct StressSessionView: View {
                 .font(.system(size: 26, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
                 .fixedSize(horizontal: false, vertical: true)
+
+            if let imageData = viewModel.currentCard.imageData,
+               let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: 240)
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(.white.opacity(0.16), lineWidth: 1)
+                    )
+            }
 
             if showHints {
                 Text(viewModel.currentCard.hint)

@@ -24,3 +24,9 @@ struct QuestionDeck: Identifiable, Codable, Hashable {
         self.cards = cards
     }
 }
+
+extension QuestionDeck {
+    var isCustomDeck: Bool {
+        id.hasPrefix("custom-deck-")
+    }
+}

@@ -41,7 +41,7 @@ struct DeckCardView: View {
             .frame(maxWidth: .infinity, minHeight: 200, alignment: .leading)
             .background(
                 LinearGradient(
-                    colors: deck.gradientColors.map(Color.init(hex:)),
+                    colors: deck.gradientColors.map { Color(hex: $0) },
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )

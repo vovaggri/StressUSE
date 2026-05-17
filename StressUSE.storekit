@@ -1,0 +1,119 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "795B98EF",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6449258523",
+    "_developerTeamID" : "LOCALTEAM",
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21417095",
+      "localizations" : [
+
+      ],
+      "name" : "StressUSE Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "199.00",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6473264580",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Stress Mode и персональная аналитика слабых мест.",
+              "displayName" : "StressUSE Premium",
+              "locale" : "ru_RU"
+            },
+            {
+              "description" : "Stress Mode and personal weak spot analytics.",
+              "displayName" : "StressUSE Premium",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "stressuse.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "StressUSE Premium Monthly",
+          "subscriptionGroupID" : "21417095",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "type" : "local",
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

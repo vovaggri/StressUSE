@@ -1,9 +1,12 @@
 import SwiftUI
 
 struct DeckDetailView: View {
+    @AppStorage("stressuse.keepStressSound") private var keepStressSound = true
     let viewModel: DeckDetailViewModel
-    let onStartStressMode: () -> Void
+    let premiumAccess: PremiumAccessService
+    let onStartStressMode: (Int) -> Void
     let onBack: () -> Void
+    @State private var selectedDurationMinutes = 20
 
     var body: some View {
         ZStack {
@@ -38,7 +41,7 @@ struct DeckDetailView: View {
                     }
 
                     VStack(alignment: .leading, spacing: 14) {
-                        Text("Как работает Stress Mode")
+                        Text(isStressModeEnabled ? "Как работает Stress Mode" : "Как работает тест")
                             .font(.title2.weight(.bold))
                             .foregroundStyle(.white)
 
@@ -84,12 +87,14 @@ struct DeckDetailView: View {
                             .background(.black.opacity(0.18), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
                     }
 
-                    Button(action: onStartStressMode) {
+                    durationPicker
+
+                    Button(action: { onStartStressMode(selectedDurationMinutes) }) {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Запустить Stress Mode")
+                                Text(isStressModeEnabled ? "Запустить Stress Mode" : "Запустить тест")
                                     .font(.headline.weight(.bold))
-                                Text("20 минут, без паузы, с фоновым шумом")
+                                Text(isStressModeEnabled ? "\(formattedDuration), со звуком" : "\(formattedDuration), без звука")
                                     .font(.subheadline)
                                     .foregroundStyle(.black.opacity(0.7))
                             }
@@ -110,5 +115,66 @@ struct DeckDetailView: View {
                 .padding(20)
             }
         }
+    }
+
+    private var durationPicker: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Длительность сессии")
+                        .font(.headline.weight(.bold))
+                        .foregroundStyle(.white)
+                    Text("От 10 минут до 3 часов 55 минут")
+                        .font(.subheadline)
+                        .foregroundStyle(.white.opacity(0.68))
+                }
+
+                Spacer()
+
+                Text(formattedDuration)
+                    .font(.headline.weight(.bold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(.white.opacity(0.12), in: Capsule())
+            }
+
+            Slider(value: durationSliderValue, in: 10...235, step: 5)
+                .tint(.orange)
+
+            HStack {
+                Text("10 мин")
+                Spacer()
+                Text("3 ч 55 мин")
+            }
+            .font(.caption.weight(.medium))
+            .foregroundStyle(.white.opacity(0.62))
+        }
+        .padding(18)
+        .background(.black.opacity(0.18), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+    }
+
+    private var isStressModeEnabled: Bool {
+        premiumAccess.hasPremiumAccess && keepStressSound
+    }
+
+    private var durationSliderValue: Binding<Double> {
+        Binding(
+            get: { Double(selectedDurationMinutes) },
+            set: { selectedDurationMinutes = Int($0) }
+        )
+    }
+
+    private var formattedDuration: String {
+        let hours = selectedDurationMinutes / 60
+        let minutes = selectedDurationMinutes % 60
+
+        if hours == 0 {
+            return "\(minutes) мин"
+        }
+        if minutes == 0 {
+            return "\(hours) ч"
+        }
+        return "\(hours) ч \(minutes) мин"
     }
 }

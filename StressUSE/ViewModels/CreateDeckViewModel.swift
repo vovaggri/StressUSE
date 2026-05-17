@@ -2,7 +2,6 @@ import Foundation
 import Observation
 
 @Observable
-@MainActor
 final class CreateDeckViewModel {
     struct DraftOption: Identifiable, Hashable {
         let id: UUID
@@ -21,6 +20,8 @@ final class CreateDeckViewModel {
         var topic: String
         var prompt: String
         var hint: String
+        var imageData: Data?
+        var imageName: String
         var options: [DraftOption]
 
         init(
@@ -28,6 +29,8 @@ final class CreateDeckViewModel {
             topic: String = "",
             prompt: String = "",
             hint: String = "Можно выбрать несколько вариантов.",
+            imageData: Data? = nil,
+            imageName: String = "",
             options: [DraftOption] = [
                 DraftOption(),
                 DraftOption(),
@@ -39,6 +42,8 @@ final class CreateDeckViewModel {
             self.topic = topic
             self.prompt = prompt
             self.hint = hint
+            self.imageData = imageData
+            self.imageName = imageName
             self.options = options
         }
     }
@@ -78,6 +83,18 @@ final class CreateDeckViewModel {
         questions[questionIndex].options.removeAll { $0.id == optionID }
     }
 
+    func setImage(_ imageData: Data, fileName: String, for questionID: UUID) {
+        guard let index = questions.firstIndex(where: { $0.id == questionID }) else { return }
+        questions[index].imageData = imageData
+        questions[index].imageName = fileName
+    }
+
+    func removeImage(from questionID: UUID) {
+        guard let index = questions.firstIndex(where: { $0.id == questionID }) else { return }
+        questions[index].imageData = nil
+        questions[index].imageName = ""
+    }
+
     func buildDeck() -> QuestionDeck? {
         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedTitle.isEmpty else {
@@ -114,6 +131,7 @@ final class CreateDeckViewModel {
                 topic: topic,
                 prompt: prompt,
                 hint: hint.isEmpty ? "Можно выбрать несколько вариантов." : hint,
+                imageData: question.imageData,
                 options: filledOptions.enumerated().map { index, option in
                     AnswerOption(id: "\(index + 1)", text: option.text)
                 },

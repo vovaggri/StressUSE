@@ -16,6 +16,7 @@ final class AppViewModel {
     private var cardsByID: [String: QuestionCard] = [:]
     private var customDecks: [QuestionDeck] = []
 
+    let premiumAccess: PremiumAccessService
     var decks: [QuestionDeck] = []
     var history: [SessionRecord] = []
     var weakTopicStats: [String: Int] = [:]
@@ -26,14 +27,18 @@ final class AppViewModel {
     var latestMistakesDeck: QuestionDeck?
     var selectedTab: AppTab = .decks
     var isPresentingDeckComposer = false
+    var isPresentingPremiumOffer = false
+    var requestedPremiumFeature: PremiumFeature = .stressMode
     var deckComposerViewModel = CreateDeckViewModel()
 
+    @MainActor
     init(
         deckRepository: DeckProviding = DeckRepository(),
         persistenceService: PersistenceServicing = PersistenceService()
     ) {
         self.deckRepository = deckRepository
         self.persistenceService = persistenceService
+        self.premiumAccess = PremiumAccessService()
         load()
     }
 
@@ -70,7 +75,10 @@ final class AppViewModel {
         selectedTab = .decks
     }
 
-    func startStressMode(for deck: QuestionDeck) {
+    func startStressMode(for deck: QuestionDeck, durationMinutes: Int = 20) {
+        let clampedDurationMinutes = min(max(durationMinutes, 10), 235)
+        let isStressSoundEnabled = premiumAccess.hasPremiumAccess
+            && (UserDefaults.standard.object(forKey: "stressuse.keepStressSound") as? Bool ?? true)
         let preparedDeck = prepareDeckForSession(deck)
         selectedDeck = preparedDeck
         latestResult = nil
@@ -78,7 +86,8 @@ final class AppViewModel {
         latestMistakesDeck = nil
         activeSessionViewModel = StressSessionViewModel(
             deck: preparedDeck,
-            stressSoundEnabled: UserDefaults.standard.object(forKey: "stressuse.keepStressSound") as? Bool ?? true
+            durationSeconds: clampedDurationMinutes * 60,
+            stressSoundEnabled: isStressSoundEnabled
         ) { [weak self] summary in
             self?.completeSession(with: summary)
         }
@@ -94,6 +103,11 @@ final class AppViewModel {
     }
 
     func startMistakeRecovery() {
+        guard premiumAccess.hasPremiumAccess else {
+            presentPremiumOffer(for: .analytics)
+            return
+        }
+
         guard let deck = latestMistakesDeck else { return }
         startStressMode(for: deck)
     }
@@ -118,6 +132,29 @@ final class AppViewModel {
         isPresentingDeckComposer = false
     }
 
+    func presentPremiumOffer(for feature: PremiumFeature) {
+        requestedPremiumFeature = feature
+        isPresentingPremiumOffer = true
+        Task {
+            await premiumAccess.refresh()
+        }
+    }
+
+    func dismissPremiumOffer() {
+        isPresentingPremiumOffer = false
+    }
+
+    func purchasePremium() async {
+        await premiumAccess.purchasePremium()
+        if premiumAccess.hasPremiumAccess {
+            isPresentingPremiumOffer = false
+        }
+    }
+
+    func restorePremiumPurchases() async {
+        await premiumAccess.restorePurchases()
+    }
+
     func saveCustomDeck(_ deck: QuestionDeck) {
         customDecks.insert(deck, at: 0)
         persistenceService.saveCustomDecks(customDecks)
@@ -128,6 +165,18 @@ final class AppViewModel {
         selectedDeck = deck
         selectedTab = .decks
         isPresentingDeckComposer = false
+    }
+
+    func deleteCustomDeck(_ deck: QuestionDeck) {
+        guard deck.isCustomDeck else { return }
+
+        customDecks.removeAll { $0.id == deck.id }
+        persistenceService.saveCustomDecks(customDecks)
+        refreshDeckLibrary()
+
+        if selectedDeck?.id == deck.id {
+            selectedDeck = nil
+        }
     }
 
     private func completeSession(with summary: SessionSummary) {

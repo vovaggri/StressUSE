@@ -1,4 +1,6 @@
+import PhotosUI
 import SwiftUI
+import UIKit
 
 struct CreateDeckView: View {
     private enum Field: Hashable {
@@ -14,6 +16,8 @@ struct CreateDeckView: View {
     let onClose: () -> Void
     let onSave: (QuestionDeck) -> Void
     @FocusState private var focusedField: Field?
+    @State private var selectedPhotoQuestionID: UUID?
+    @State private var selectedPhotoItem: PhotosPickerItem?
 
     var body: some View {
         ZStack {
@@ -92,11 +96,14 @@ struct CreateDeckView: View {
         } message: {
             Text(viewModel.errorMessage ?? "")
         }
+        .onChange(of: selectedPhotoItem) { _, newItem in
+            handlePhotoSelection(newItem)
+        }
     }
 
     private var introCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Собери свой stress-набор")
+            Text("Собери свой набор")
                 .font(.system(size: 30, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
 
@@ -186,6 +193,8 @@ struct CreateDeckView: View {
                 field: .prompt(question.id)
             )
 
+            questionImagePicker(for: question)
+
             editorField(
                 title: "Подсказка",
                 text: binding(for: question.id, keyPath: \.hint),
@@ -216,6 +225,69 @@ struct CreateDeckView: View {
         }
         .padding(20)
         .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+    }
+
+    private func questionImagePicker(for question: CreateDeckViewModel.DraftQuestion) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("Фото к вопросу")
+                    .font(.headline.weight(.semibold))
+                    .foregroundStyle(.white)
+
+                Spacer()
+
+                PhotosPicker(
+                    selection: photoSelectionBinding(for: question.id),
+                    matching: .images,
+                    photoLibrary: .shared()
+                ) {
+                    Label(question.imageData == nil ? "Добавить" : "Заменить", systemImage: "photo")
+                        .font(.footnote.weight(.bold))
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.orange)
+            }
+
+            if let imageData = question.imageData,
+               let uiImage = UIImage(data: imageData) {
+                questionImagePreview(uiImage, questionID: question.id)
+            } else {
+                Text("Необязательно. Можно добавить изображение с условием, схемой или фрагментом задания.")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.62))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+            }
+        }
+    }
+
+    private func questionImagePreview(_ image: UIImage, questionID: UUID) -> some View {
+        ZStack(alignment: .topTrailing) {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity)
+                .frame(height: 180)
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(.white.opacity(0.16), lineWidth: 1)
+                )
+
+            Button {
+                viewModel.removeImage(from: questionID)
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.black)
+                    .padding(10)
+                    .background(.white.opacity(0.92), in: Circle())
+            }
+            .buttonStyle(.plain)
+            .padding(10)
+        }
     }
 
     private func optionEditor(questionID: UUID, option: CreateDeckViewModel.DraftOption) -> some View {
@@ -291,6 +363,18 @@ struct CreateDeckView: View {
         )
     }
 
+    private func photoSelectionBinding(for questionID: UUID) -> Binding<PhotosPickerItem?> {
+        Binding(
+            get: {
+                selectedPhotoQuestionID == questionID ? selectedPhotoItem : nil
+            },
+            set: { newValue in
+                selectedPhotoQuestionID = questionID
+                selectedPhotoItem = newValue
+            }
+        )
+    }
+
     private func binding(for questionID: UUID, keyPath: WritableKeyPath<CreateDeckViewModel.DraftQuestion, String>) -> Binding<String> {
         Binding(
             get: {
@@ -343,6 +427,60 @@ struct CreateDeckView: View {
 
     private func optionRemovable(questionID: UUID) -> Bool {
         viewModel.questions.first(where: { $0.id == questionID })?.options.count ?? 0 > 2
+    }
+
+    private func handlePhotoSelection(_ item: PhotosPickerItem?) {
+        guard let item, let questionID = selectedPhotoQuestionID else { return }
+
+        Task {
+            do {
+                guard let data = try await item.loadTransferable(type: Data.self) else {
+                    await clearPhotoSelection()
+                    return
+                }
+
+                await MainActor.run {
+                    guard let compressedData = compressImageData(data) else {
+                        viewModel.errorMessage = "Не удалось прочитать изображение. Попробуй другое фото."
+                        selectedPhotoItem = nil
+                        selectedPhotoQuestionID = nil
+                        return
+                    }
+
+                    viewModel.setImage(compressedData, fileName: item.itemIdentifier ?? "Фото", for: questionID)
+                    selectedPhotoItem = nil
+                    selectedPhotoQuestionID = nil
+                }
+            } catch {
+                await MainActor.run {
+                    viewModel.errorMessage = "Не удалось добавить фото. Попробуй выбрать другое изображение."
+                    selectedPhotoItem = nil
+                    selectedPhotoQuestionID = nil
+                }
+            }
+        }
+    }
+
+    @MainActor
+    private func clearPhotoSelection() {
+        selectedPhotoItem = nil
+        selectedPhotoQuestionID = nil
+    }
+
+    private func compressImageData(_ data: Data) -> Data? {
+        guard let image = UIImage(data: data) else { return nil }
+
+        let maxSide: CGFloat = 900
+        let longestSide = max(image.size.width, image.size.height)
+        let scale = min(1, maxSide / longestSide)
+        let targetSize = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        let resizedImage = renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+
+        return resizedImage.jpegData(compressionQuality: 0.78)
     }
 }
 

@@ -21,7 +21,10 @@ struct ContentView: View {
                                 weakTopicStats: appViewModel.weakTopicStats,
                                 recentResults: appViewModel.history.filter { $0.deckID == selectedDeck.id }
                             ),
-                            onStartStressMode: { appViewModel.startStressMode(for: selectedDeck) },
+                            premiumAccess: appViewModel.premiumAccess,
+                            onStartStressMode: { durationMinutes in
+                                appViewModel.startStressMode(for: selectedDeck, durationMinutes: durationMinutes)
+                            },
                             onBack: appViewModel.closeDeckDetail
                         )
                     } else {
@@ -29,8 +32,11 @@ struct ContentView: View {
                             decks: appViewModel.decks,
                             history: appViewModel.history,
                             weakTopicStats: appViewModel.weakTopicStats,
+                            premiumAccess: appViewModel.premiumAccess,
                             onSelectDeck: appViewModel.selectDeck,
-                            onCreateDeck: appViewModel.presentDeckComposer
+                            onCreateDeck: appViewModel.presentDeckComposer,
+                            onDeleteDeck: appViewModel.deleteCustomDeck,
+                            onOpenPremium: { appViewModel.presentPremiumOffer(for: .stressMode) }
                         )
                     }
                 }
@@ -40,11 +46,19 @@ struct ContentView: View {
                 .tag(AppTab.decks)
 
                 NavigationStack {
-                    MistakesView(
-                        mistakesDeck: appViewModel.latestMistakesDeck,
-                        weakTopics: appViewModel.topWeakTopics,
-                        onStart: appViewModel.startMistakeRecovery
-                    )
+                    if appViewModel.premiumAccess.hasPremiumAccess {
+                        MistakesView(
+                            mistakesDeck: appViewModel.latestMistakesDeck,
+                            weakTopics: appViewModel.topWeakTopics,
+                            onStart: appViewModel.startMistakeRecovery
+                        )
+                    } else {
+                        PremiumLockedView(
+                            feature: .analytics,
+                            premiumAccess: appViewModel.premiumAccess,
+                            onOpenPremium: { appViewModel.presentPremiumOffer(for: .analytics) }
+                        )
+                    }
                 }
                 .tabItem {
                     Label("Ошибки", systemImage: "arrow.trianglehead.clockwise")
@@ -52,14 +66,22 @@ struct ContentView: View {
                 .tag(AppTab.mistakes)
 
                 NavigationStack {
-                    StatisticsView(
-                        totalSessions: appViewModel.totalSessionsCount,
-                        totalTrainingSeconds: appViewModel.totalTrainingSeconds,
-                        averageScorePercent: appViewModel.averageScorePercent,
-                        strongestSubject: appViewModel.strongestSubject,
-                        recentHistory: appViewModel.history,
-                        weakTopics: appViewModel.topWeakTopics
-                    )
+                    if appViewModel.premiumAccess.hasPremiumAccess {
+                        StatisticsView(
+                            totalSessions: appViewModel.totalSessionsCount,
+                            totalTrainingSeconds: appViewModel.totalTrainingSeconds,
+                            averageScorePercent: appViewModel.averageScorePercent,
+                            strongestSubject: appViewModel.strongestSubject,
+                            recentHistory: appViewModel.history,
+                            weakTopics: appViewModel.topWeakTopics
+                        )
+                    } else {
+                        PremiumLockedView(
+                            feature: .analytics,
+                            premiumAccess: appViewModel.premiumAccess,
+                            onOpenPremium: { appViewModel.presentPremiumOffer(for: .analytics) }
+                        )
+                    }
                 }
                 .tabItem {
                     Label("Статистика", systemImage: "chart.pie.fill")
@@ -67,7 +89,11 @@ struct ContentView: View {
                 .tag(AppTab.statistics)
 
                 NavigationStack {
-                    SettingsView()
+                    SettingsView(
+                        premiumAccess: appViewModel.premiumAccess,
+                        onOpenPremium: { appViewModel.presentPremiumOffer(for: .stressMode) },
+                        onRestorePurchases: { Task { await appViewModel.restorePremiumPurchases() } }
+                    )
                 }
                 .tabItem {
                     Label("Настройки", systemImage: "gearshape.fill")
@@ -116,6 +142,23 @@ struct ContentView: View {
                     onSave: appViewModel.saveCustomDeck
                 )
             }
+            .presentationDetents([.large])
+        }
+        .sheet(
+            isPresented: Binding(
+                get: { appViewModel.isPresentingPremiumOffer },
+                set: { isPresented in
+                    appViewModel.isPresentingPremiumOffer = isPresented
+                }
+            )
+        ) {
+            PremiumOfferView(
+                premiumAccess: appViewModel.premiumAccess,
+                feature: appViewModel.requestedPremiumFeature,
+                onClose: appViewModel.dismissPremiumOffer,
+                onPurchase: { Task { await appViewModel.purchasePremium() } },
+                onRestore: { Task { await appViewModel.restorePremiumPurchases() } }
+            )
             .presentationDetents([.large])
         }
     }

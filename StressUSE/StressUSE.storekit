@@ -1,0 +1,83 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "F2CF2D06",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "ru",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "RUS",
+    "_storeKitErrors" : [
+
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "F25F5291",
+      "localizations" : [
+
+      ],
+      "name" : "StressCards Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "199",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "7211B3F1",
+          "introductoryOffers" : [
+
+          ],
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "StressCards Premium Monthly",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "",
+              "displayName" : "Ежемесячная подписка на StressCards",
+              "locale" : "ru"
+            }
+          ],
+          "productID" : "stressuse.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "StressCards Premium Monthly",
+          "subscriptionGroupID" : "F25F5291",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 5,
+    "minor" : 0
+  }
+}

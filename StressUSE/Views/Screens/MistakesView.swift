@@ -52,7 +52,7 @@ struct MistakesView: View {
                             Text("Ошибок пока нет")
                                 .font(.headline.weight(.bold))
                                 .foregroundStyle(Color.black.opacity(0.88))
-                            Text("После первой стресс-сессии здесь автоматически появится подборка для повторения.")
+                            Text("После первой сессии здесь автоматически появится подборка для повторения.")
                                 .font(.subheadline)
                                 .foregroundStyle(Color.black.opacity(0.6))
                         }

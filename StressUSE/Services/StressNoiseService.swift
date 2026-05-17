@@ -3,46 +3,74 @@ import Foundation
 
 @MainActor
 final class StressNoiseService {
-    private let engine = AVAudioEngine()
-    private var isConfigured = false
+    private let ambienceResourceName = "708407__group39__highschoolers-writing-test-in-classroom-ambience"
+    private let customSoundPathKey = "stressuse.customStressSoundPath"
+    private var player: AVAudioPlayer?
 
     func start() {
-        configureIfNeeded()
-        guard !engine.isRunning else { return }
+        configurePlayerIfNeeded()
+        guard let player, !player.isPlaying else { return }
 
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try AVAudioSession.sharedInstance().setActive(true)
-            try engine.start()
+            player.currentTime = 0
+            player.play()
         } catch {
-            print("Stress noise failed to start: \(error.localizedDescription)")
+            print("Classroom ambience failed to start: \(error.localizedDescription)")
         }
     }
 
     func stop() {
-        engine.stop()
+        player?.stop()
+        player?.currentTime = 0
         try? AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
     }
 
-    private func configureIfNeeded() {
-        guard !isConfigured else { return }
-
-        let format = engine.outputNode.inputFormat(forBus: 0)
-        let source = AVAudioSourceNode { _, _, frameCount, audioBufferList -> OSStatus in
-            let ablPointer = UnsafeMutableAudioBufferListPointer(audioBufferList)
-            for frame in 0 ..< Int(frameCount) {
-                let sample = Float.random(in: -0.18 ... 0.18)
-                for buffer in ablPointer {
-                    let ptr = buffer.mData?.assumingMemoryBound(to: Float.self)
-                    ptr?[frame] = sample
-                }
-            }
-            return noErr
+    private func configurePlayerIfNeeded() {
+        guard player == nil else { return }
+        guard let soundURL = classroomAmbienceURL() else {
+            print("Classroom ambience sound file was not found in the app bundle.")
+            return
         }
 
-        engine.attach(source)
-        engine.connect(source, to: engine.mainMixerNode, format: format)
-        engine.mainMixerNode.outputVolume = 0.16
-        isConfigured = true
+        do {
+            let audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer.numberOfLoops = -1
+            audioPlayer.volume = 0.28
+            audioPlayer.prepareToPlay()
+            player = audioPlayer
+        } catch {
+            print("Classroom ambience failed to load: \(error.localizedDescription)")
+        }
+    }
+
+    private func classroomAmbienceURL() -> URL? {
+        if let customURL = customStressSoundURL() {
+            return customURL
+        }
+
+        let bundle = Bundle.main
+
+        if let url = bundle.url(forResource: ambienceResourceName, withExtension: "wav") {
+            return url
+        }
+
+        if let url = bundle.url(forResource: ambienceResourceName, withExtension: "wav", subdirectory: "Sounds") {
+            return url
+        }
+
+        if let url = bundle.url(forResource: ambienceResourceName, withExtension: "wav", subdirectory: "Resources/Sounds") {
+            return url
+        }
+
+        return nil
+    }
+
+    private func customStressSoundURL() -> URL? {
+        let path = UserDefaults.standard.string(forKey: customSoundPathKey) ?? ""
+        guard !path.isEmpty else { return nil }
+        guard FileManager.default.fileExists(atPath: path) else { return nil }
+        return URL(fileURLWithPath: path)
     }
 }

@@ -12,6 +12,7 @@ struct ResultsView: View {
     var body: some View {
         ZStack {
             AppBackgroundView()
+                .ignoresSafeArea()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
@@ -93,7 +94,6 @@ struct ResultsView: View {
                 .padding(20)
             }
         }
-        .ignoresSafeArea()
     }
 
     private func format(seconds: Int) -> String {

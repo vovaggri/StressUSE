@@ -5,7 +5,7 @@ import Observation
 @MainActor
 final class StressSessionViewModel {
     let deck: QuestionDeck
-    let totalDuration: Int = 20 * 60
+    let totalDuration: Int
     let stressSoundEnabled: Bool
 
     private let timerService: SessionTimerService
@@ -25,12 +25,14 @@ final class StressSessionViewModel {
 
     init(
         deck: QuestionDeck,
+        durationSeconds: Int = 20 * 60,
         stressSoundEnabled: Bool = true,
         timerService: SessionTimerService? = nil,
         noiseService: StressNoiseService? = nil,
         onComplete: @escaping (SessionSummary) -> Void
     ) {
         self.deck = deck
+        self.totalDuration = durationSeconds
         self.stressSoundEnabled = stressSoundEnabled
         self.timerService = timerService ?? SessionTimerService()
         self.noiseService = noiseService ?? StressNoiseService()

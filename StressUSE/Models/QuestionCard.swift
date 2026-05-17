@@ -6,6 +6,7 @@ struct QuestionCard: Identifiable, Codable, Hashable {
     let topic: String
     let prompt: String
     let hint: String
+    let imageData: Data?
     let options: [AnswerOption]
     let correctOptionIDs: Set<String>
 
@@ -15,6 +16,7 @@ struct QuestionCard: Identifiable, Codable, Hashable {
         topic: String,
         prompt: String,
         hint: String,
+        imageData: Data? = nil,
         options: [AnswerOption],
         correctOptionIDs: Set<String>
     ) {
@@ -23,6 +25,7 @@ struct QuestionCard: Identifiable, Codable, Hashable {
         self.topic = topic
         self.prompt = prompt
         self.hint = hint
+        self.imageData = imageData
         self.options = options
         self.correctOptionIDs = correctOptionIDs
     }
